@@ -10,7 +10,7 @@
 	let height = 500;
 
 	const padding = { top: 20, right: 40, bottom: 40, left: 40 };
-  $: xmin = Math.floor({points}["points"][0].x * 20) / 20
+  $: xmin = points[0]===undefined  ? 0 : Math.floor({points}["points"][0].x * 20) / 20
   $: xTicks = incrspace(xmin,1.01,0.05).map((x) => roundn(x,-2));
 
 
