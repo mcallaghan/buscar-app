@@ -64,7 +64,7 @@
 
 	<!-- data -->
 	{#each points as point}
-		<circle cx={xScale(point.x)} cy={yScale(point.y)} r="5" />
+		<circle cx={xScale(point.x)} cy={yScale(point.y)} r="5" class="{point.c}" />
 	{/each}
 </svg>
 
@@ -76,10 +76,17 @@
 	}
 
 	circle {
-		fill: orange;
 		fill-opacity: 0.6;
 		stroke: rgba(0, 0, 0, 0.5);
 	}
+
+  .c0 {
+    fill: orange;
+  }
+
+  .c1 {
+    fill: red;
+  }
 
 	.tick line {
 		stroke: #ddd;

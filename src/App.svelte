@@ -6,9 +6,11 @@
   import roundn from '@stdlib/math-base-special-roundn';
   import ns from '@stdlib/array';
   import incrspace from '@stdlib/array/incrspace';
+  let N: number = 2000;
+  let n_screened: number = 1000;
   let relevant: number = 95;
   let consecutive: number = 100;
-  let remaining: number = 1000;
+  $: remaining = N-n_screened;
   let recall_target: number = 95;
   function kh(r,rt) {
     return Math.floor((r/(rt*0.01))-r+1)
@@ -19,9 +21,15 @@
   $: p_scores = r_targets.map((x) => {
     var k_hat_r = kh(relevant,x)
     var p_r = roundn(cdf(0, remaining+consecutive, k_hat_r, consecutive),-3);
+    if (x==recall_target) {
+      var c = 'c1';
+    } else {
+      var c = 'c0';
+    }
     return {
       x: x*0.01,
-      y: p_r
+      y: p_r,
+      c: c
     }
 
   });
@@ -51,17 +59,24 @@ or the proportion of relevant records we actually identify.
       Plot showing the p value that a range of different recall targets has been missed
     </div>
     <div class="container">
+      <p>How many documents did your queries identify after deduplication?
+      <input type="number" bind:value={N} min="0" step="10"/>
+      <p>How many have you screened by hand?
+      <input type="number" bind:value={n_screened} min="0" step="10" />
       <p>How many <b>relevant</b> records have you identified?
       <input type="number" bind:value={relevant} min="0" />
       <p>How many <b>consecutive irrelevant</b> records have you identified?
       <input type="number" bind:value={consecutive} min="0"/>
-      <p>How many records have <b>not</b> been screened by hand?
-      <input type="number" bind:value={remaining} />
       <p>What level of <b>recall</b> (in %) would you like to achieve?
       <input type="number" bind:value={recall_target} min="0" max="100"/>
-      <p>
-      <p>We would have missed our target if <b>{k_hat}</b> or more documents are relevant.
-      <p>The chances of observing <b>0</b> relevant documents in a sample of <b>{consecutive}</b> documents from a total of <b>{consecutive+remaining}</b> documents that contained at least <b>{k_hat}</b> relevant documents is <b>{p}</b>
+
+
+<p class="border">With p=<b>{p}</b> you have reached your desired recall target
+
+<p>This is based on assessing the chances of seeing <b>0</b> relevant records from a sample of <b>{consecutive}</b> records drawn from a population of <b>{consecutive+remaining}</b> documents that contained at least <b>{k_hat}</b> using the hypergeometric distribution function.
+<p>In a review, you could state "using the stopping criteria defined in Callaghan and Müller-Hansen (2020), with p={p}, we reject the null hypothesis that we have not achieved our recall target of {recall_target}%".
+
+
     </div>
   </div>
 
@@ -69,6 +84,9 @@ or the proportion of relevant records we actually identify.
 </main>
 
 <style>
+  .border {
+    border: 0.5px solid black;
+  }
 	.parent-container{
 
 /* 			gap: 1rem; */
@@ -89,5 +107,8 @@ or the proportion of relevant records we actually identify.
   .caption {
     margin-top: -1em;
     font-size: 0.8em;
+  }
+  input {
+    width: 6em;
   }
 </style>
