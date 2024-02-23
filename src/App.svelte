@@ -73,7 +73,7 @@ or the proportion of relevant records we actually identify.
 
 <p class="border">With p=<b>{p}</b> you have reached your desired recall target
 
-<p>This is based on assessing the chances of seeing <b>0</b> relevant records from a sample of <b>{consecutive}</b> records drawn from a population of <b>{consecutive+remaining}</b> documents that contained at least <b>{k_hat}</b> using the hypergeometric distribution function.
+<p>This is based on assessing the chances of seeing <b>0</b> relevant records from a sample of <b>{consecutive}</b> records drawn from a population of <b>{consecutive+remaining}</b> documents that contained at least <b>{k_hat}</b> relevant documents. This is calculated using the hypergeometric distribution function.
 <p>In a review, you could state "using the stopping criteria defined in Callaghan and Müller-Hansen (2020), with p={p}, we reject the null hypothesis that we have not achieved our recall target of {recall_target}%".
 
 
