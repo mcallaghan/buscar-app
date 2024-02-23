@@ -65,6 +65,11 @@
 	<!-- data -->
 	{#each points as point}
 		<circle cx={xScale(point.x)} cy={yScale(point.y)} r="5" class="{point.c}" />
+    {#if point.c=='c1'}
+    <g class="label" >
+      <text x="{xScale(point.x+0.01)}" y="{yScale(point.y)}">{point.y}</text>
+    </g>
+    {/if}
 	{/each}
 </svg>
 
