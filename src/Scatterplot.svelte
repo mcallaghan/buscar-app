@@ -1,5 +1,5 @@
-<script>
-	import { onMount } from 'svelte';
+<script lang="ts">
+	import { onMount, tick } from 'svelte';
 	import { scaleLinear, scaleLog } from 'd3-scale';
   import incrspace from '@stdlib/array/incrspace';
   import roundn from '@stdlib/math-base-special-roundn';
@@ -12,6 +12,8 @@
 	const padding = { top: 20, right: 40, bottom: 40, left: 40 };
   $: xmin = points[0]===undefined  ? 0 : Math.floor({points}["points"][0].x * 20) / 20
   $: xTicks = incrspace(xmin,1.01,0.05).map((x) => roundn(x,-2));
+
+	$: offset = (1-xmin)*0.02;
 
 
 	$: xScale = scaleLinear()
@@ -26,7 +28,16 @@
 
 	$: yTicks = height > 180 ? [0, 0.05, 0.1, 0.33, 0.5, 1] : [0, 0.05, 0.1, 0.33, 0.5, 1];
 
-	onMount(resize);
+	function delay(milliseconds){
+	    return new Promise(resolve => {
+	        setTimeout(resolve, milliseconds);
+	    });
+	}
+
+	onMount(async () => {
+		await delay(100)
+		resize();
+	});
 
 	function resize() {
 		({ width, height } = svg.getBoundingClientRect());
@@ -67,7 +78,7 @@
 		<circle cx={xScale(point.x)} cy={yScale(point.y)} r="5" class="{point.c}" />
     {#if point.c=='c1'}
     <g class="label" >
-      <text x="{xScale(point.x+0.01)}" y="{yScale(point.y)}">{point.y}</text>
+      <text x="{xScale(point.x+offset)}" y="{yScale(point.y)}">{point.y}</text>
     </g>
     {/if}
 	{/each}
