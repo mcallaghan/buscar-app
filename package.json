@@ -12,7 +12,7 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
     "@tsconfig/svelte": "^5.0.2",
-    "svelte": "^4.2.11",
+    "svelte": "^4.2.12",
     "svelte-check": "^3.6.4",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
@@ -22,6 +22,7 @@
     "@stdlib/array": "^0.2.1",
     "@stdlib/math-base-special-roundn": "^0.2.0",
     "@stdlib/stats-base-dists-hypergeometric-cdf": "^0.2.0",
+    "@sveltestrap/sveltestrap": "^6.2.5",
     "d3": "^7.8.5",
     "d3-scale": "^4.0.2"
   }
